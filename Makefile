@@ -8,7 +8,7 @@
 
 VERSION_STRING=\"0.3.2\"
 
-BIN=bin/rpi_beamertool.bin
+BIN=bin/rpi-beamertool
 
 OBJS=rpi_beamertool.o 
 OBJS+=canvas_manager.o canvas.o renderer.o fps_counter.o 
