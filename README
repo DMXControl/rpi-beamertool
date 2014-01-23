@@ -1,0 +1,35 @@
+***************************
+* Raspberry Pi Beamertool *
+***************************
+by Moritz <mo@blog-srv.net>
+
+-----------------------------
+Installation (for compiling):
+-----------------------------
+set Memory Split to 128 MB
+sudo apt-get install mediainfo
+sudo apt-get install libncurses5-dev
+cd /opt/vc/src/hello_pi/
+./rebuild.sh
+
+-----
+INFO:
+-----
+ - Im Raspberry Pi den Graphik Speicher auf 128 MB erhöhen
+   (bei Standarteinstellung 64MB passen nur ca. 50 Texturen in den
+   Speicher, je nach Texturgröße)
+ - die Berechnung der automatischen Drehungen und des Shutters, erfolgt pro
+   Frame, da dies im Windows Beamertool genauso gelößt ist. Besser wäre eine
+   Berechnung pro Zeit, da auf dem Raspberry Pi die Framerate von 60FPS nicht
+   garantiert werden kann, und bei vielen großen Gobos absinkt.
+ - der Animationsregler ist wirkungslos, das Steuern von Videos und gif's ist
+   (noch) nicht implementiert.
+ - es kann zu Problemen bei der Framerate kommen, wenn man viele Gobos
+   (über Anzahl Regler) verwendet und diese recht groß skaliert
+   Geschätzte Faustformel: solange Skalierung, Anzahl und Zoom, so eingestellt
+   sind, dass sich keine Gobos überlappen, sollten keine Probleme auftreten.
+   (Überlappung von anderen Laser Instanzen sind hierbei nicht gemeint)
+ - man kann wählen ob sich die Zoomfunktion sich wie im Original verhält oder
+   in einen Kreis zoomt
+ - Es wird das Programm mediainfo benötigt:
+   sudo apt-get install mediainfo

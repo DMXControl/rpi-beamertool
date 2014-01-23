@@ -1,0 +1,15 @@
+TO_DO:
+ - Kommentieren; Quellcode ordentlich formatieren
+ - effizientere Möglichkeit zum PNG laden; stb_image.c braucht lange zum kompilieren
+ - ArtNet Receiver Thread schreibt einfach die canvas eigenschaften, diese werden eventuell zeitgleich gelesen
+   eventuell mutex einbauen
+ - google nach Umwicklungsartefake; hat eventuell was mit den sporadisch auftretenden
+   Textturwiederhoungen am Rand zu tun; google stichwort: GL_REPEAT
+ - Latenz veringern; Rendering optimieren, etc...
+ - Framerate bei berechungen Berücksichtigen? Fehlerbehandlung wenn FPS absinkt?
+ - soll Shutter und/oder Autodrehungen per Frame oder pro Zeit berechnet werden?
+   aktuell pro Frame, um gleiche drehungen wie beim original zu haben; aber Problem wenn FPS absinken
+ - Windows Beamertool scheint irgend eine Form von antialising bei den Texturen zu machen, hier nicht
+
+Anpassung an orginal:
+   passt alles, abgesehen von Animationsregler (unbenutzt da keine Videos), und Einstellmöglichkeit für Zoom

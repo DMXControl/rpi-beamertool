@@ -1,0 +1,9 @@
+#!/bin/bash
+
+
+export TERM=xterm
+
+killall lasersim.bin
+cd /opt/lasersim
+clear
+./lasersim.bin --silent
