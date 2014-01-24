@@ -1,56 +1,49 @@
 <?php
-
 $action = $_GET['action'];
-set_time_limit(1);
-
-
+set_time_limit(3);
 ?>
 
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-       "http://www.w3.org/TR/html4/strict.dtd">
+<!doctype html>
 <html>
 <head>
-<title>LaserPi</title>
+<meta charset="UTF-8">
+<title>rpi-beamertool webinterface</title>
+<style type="text/css">
+body {
+    text-align:center;
+    font-family:Arial;
+}
+button {
+    font-size:20px;
+    width:250px;
+    height:100px;
+}
+</style>
 </head>
 <body>
 
-<h1>LaserPi Simple WebInterface</h1>
+<h1>Raspberry Pi Beamertool - Webinterface</h1>
 
-<button onClick="self.location.href='index.php?action=restart'">Restart LaserSim</button>
-<button onClick="self.location.href='index.php?action=reboot'">Reboot RaspberryPi</button>
-<button onClick="self.location.href='index.php?action=shutdown'">Power Off RasbperryPi</button>
+<button onClick="self.location.href='index.php?action=restart'">Restart RPI Beamertool</button><br />
+<button onClick="self.location.href='index.php?action=reboot'">Reboot Raspberry Pi</button><br />
+<button onClick="self.location.href='index.php?action=shutdown'">Shutdown Rasbperry Pi</button><br />
 
-
-<?php
-if ($action == "restart")
-{
-    echo "<script type=\"text/javascript\">";
-    echo "<!--";
-    echo "window.location=\"index.php\"";
-    echo "//-->";
-    echo "</script>";
-}
-?>
-
+<?php if ($action == "restart") { ?>
+<script type="text/javascript">
+    <!--
+    window.location="index.php"
+    //-->
+</script>
+<?php } ?>
 
 </body>
 </html>
-
 <?php
-if ($action == "reboot")
-{
+if ($action == "reboot") {
     shell_exec("sudo /sbin/shutdown -r now");
-}
-
-if ($action == "shutdown")
-{
+} elseif ($action == "shutdown") {
     shell_exec("sudo /sbin/shutdown -h now");
+} elseif ($action == "restart") {
+    system("sudo /opt/rpi-beamertool/rpi-bt-restart.sh > /dev/null &");
 }
-
-if ($action == "restart")
-{
-    system("sudo /usr/local/bin/lasersim > /dev/null &");
-}
-
 ?>
