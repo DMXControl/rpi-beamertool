@@ -29,6 +29,7 @@ namespace Beamertool {
         void makeErrorTexture(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
         bool fileExist(const std::string &filename);
         bool getVideoSize(std::string &filename, int *size_x, int *size_y);
+        double getSecondsSinceLastCall();
         
         GLfloat* texCoords_ptr;
         GLfloat* texCoordsVid_ptr;
@@ -45,7 +46,10 @@ namespace Beamertool {
         
         unsigned char **gif_buffer;
         GifAnimationInfo gif_info;
-        unsigned long gif_time;
+        double gif_time;
+        unsigned long time_sec;
+        unsigned long time_usec;
+        
         GLuint *gif_tex;
         
         VideoPlayer * player;

@@ -4,6 +4,8 @@
 #include "GLES/gl.h"
 #include "EGL/egl.h"
 #include "EGL/eglext.h"
+#include <sys/time.h>
+#include <time.h>
 #include <unistd.h>
 #include <string>
 #include "canvas/canvas_content/content_local_file_texture/texture.h"
@@ -70,7 +72,13 @@ void Texture::load() {
         
         GIFLoader GIFL;
         this->gif_buffer = GIFL.loadAnimatedGif(filename.c_str(), &this->size_x, &this->size_y, &this->gif_info);
-        this->gif_time = 0;
+        
+        struct timeval tv;
+        gettimeofday (&tv, NULL);
+        this->time_sec = (long) tv.tv_sec;
+        this->time_usec = (long) tv.tv_usec;
+        
+        this->gif_time = 0.d;
         int timeSum = 0;
         for (int z = 0; z < this->gif_info.numberOfImages; ++z) {
             timeSum += this->gif_info.delayArray[z];
@@ -177,6 +185,16 @@ bool Texture::getVideoSize(std::string &filename, int *size_x, int *size_y) {
     return false;
 }
 
+double Texture::getSecondsSinceLastCall() {
+    struct timeval tv;
+    gettimeofday (&tv, NULL);
+    long sec = tv.tv_sec - this->time_sec;
+    long usec = tv.tv_usec - this->time_usec;
+    this->time_sec = tv.tv_sec;
+    this->time_usec = tv.tv_usec;
+    return (((double) sec) + (((double) usec) / 1000000.d));
+}
+
 void Texture::setTexture() {
     
     glTexCoordPointer(2, GL_FLOAT, 0, this->texCoords_ptr);
@@ -186,15 +204,18 @@ void Texture::setTexture() {
     } else if (this->texture_type == TEX_PNG) {
         glBindTexture(GL_TEXTURE_2D, this->png_tex);
     } else if (this->texture_type == TEX_GIF) {
-        int z = 0;
-        if (this->gif_time > this->gif_info.delayArray[this->gif_info.numberOfImages-1]) {
-            this->gif_time = 0;
+        // add time since last Frame to gif_time
+        this->gif_time += (getSecondsSinceLastCall() * 100.d);
+        // make gif_time in range [0, max_delay]
+        while (this->gif_time > this->gif_info.delayArray[this->gif_info.numberOfImages-1]) {
+            this->gif_time -= this->gif_info.delayArray[this->gif_info.numberOfImages-1];
         }
+        // find the right gif frame from gif_time
+        int z = 0;
         while (this->gif_info.delayArray[z] < this->gif_time) {
             ++z;
         }
         glBindTexture(GL_TEXTURE_2D, this->gif_tex[z]);
-        this->gif_time += 2;
     } else if (this->texture_type == TEX_VIDEO) {
         glTexCoordPointer(2, GL_FLOAT, 0, this->texCoordsVid_ptr);
         glBindTexture(GL_TEXTURE_2D, this->video_tex);
