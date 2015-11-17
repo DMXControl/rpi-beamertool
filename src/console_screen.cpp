@@ -32,7 +32,7 @@ void ConsoleScreen::init(bool s) {
         initNCurses();
         
         // Start Key Listener
-        key_listener_thread = thread(keyListener);
+        //key_listener_thread = thread(keyListener);
     }
 }
 
