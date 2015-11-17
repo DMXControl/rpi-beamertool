@@ -48,7 +48,7 @@ void ConsoleScreen::initNCurses() {
 
 ConsoleScreen::~ConsoleScreen() {
     if (!silent) {
-        key_listener_thread.join();
+        //key_listener_thread.join();
         endNCurses();
     }
 }
