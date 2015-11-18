@@ -6,7 +6,7 @@
 # Makefile is based on /opt/vc/src/hello_pi/Makefile.include
 #
 
-VERSION_STRING=\"0.3.2\"
+VERSION_STRING=\"0.3.3\"
 
 BIN=bin/rpi-beamertool
 
