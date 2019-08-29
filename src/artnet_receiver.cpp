@@ -35,7 +35,7 @@ ArtnetReceiver::ArtnetReceiver(CanvasManager * screen, int canvases_id, unsigned
     // Init Socket
     this->s = socket (AF_INET, SOCK_DGRAM , IPPROTO_UDP);
     if (this->s < 0) {
-        printf ("init_net: Kann Socket nicht öffnen ...(%s)\n", strerror(errno));
+        printf ("init_net: Kann Socket nicht Ã¶ffnen ...(%s)\n", strerror(errno));
         exit (EXIT_FAILURE);
     }
 

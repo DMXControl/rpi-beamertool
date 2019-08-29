@@ -229,17 +229,17 @@ namespace Beamertool {
         float scalingX;             // Skalierung X-Richtung    1.0 = screen_width
         float scalingY;             // Skalierung Y-Richtung    <0 = use scalingX and texture Ratio
         float rotation;             // Drehwinkel
-        float r_speed;              // Drehgeschwindigkeit °/Frame
+        float r_speed;              // Drehgeschwindigkeit Â°/Frame
         unsigned int number;        // Anzahl der Duplikate
         float zoom;                 // Abstand der Duplikate vom Mittelpunkt
         float rotation_all;         // Drehwinkel der Anordnung der Duplikate
         float r_speed_all;          // Drehgeschwindogkeit der Anordnung der Duplikate
         float r;                    // Rot
-        float g;                    // Grün
+        float g;                    // GrÃ¼n
         float b;                    // Blau
         float alpha;                // Alphakanal
         int shutter_state;          // Shutter Status (0=open; 1=close)
-        unsigned int shutter_time;  // Shutter Zeit seit letzter veränderung
+        unsigned int shutter_time;  // Shutter Zeit seit letzter verÃ¤nderung
         int shutter_speed;          // Shutter Zeit Einstellung
         //animation                 // Steuerung von Videotexturen
     };

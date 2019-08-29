@@ -9,7 +9,7 @@
 
 #define TEX_PATH "./textures/"  // Verzeichnis in dem die Texturen sind
 #define TEX_MAX 256             // Limitierung der geladenen Texturen
-                                // NICHT ÄNDERN!!! kann zum Aufruf nicht existenter Variablen führen
+                                // NICHT Ã„NDERN!!! kann zum Aufruf nicht existenter Variablen fÃ¼hren
 
 namespace Beamertool {
 

@@ -15,21 +15,21 @@ cd /opt/vc/src/hello_pi/
 -----
 INFO:
 -----
- - Im Raspberry Pi den Graphik Speicher auf 128 MB erhöhen
+ - Im Raspberry Pi den Graphik Speicher auf 128 MB erhÃ¶hen
    (bei Standarteinstellung 64MB passen nur ca. 50 Texturen in den
-   Speicher, je nach Texturgröße)
+   Speicher, je nach TexturgrÃ¶ÃŸe)
  - die Berechnung der automatischen Drehungen und des Shutters, erfolgt pro
-   Frame, da dies im Windows Beamertool genauso gelößt ist. Besser wäre eine
+   Frame, da dies im Windows Beamertool genauso gelÃ¶ÃŸt ist. Besser wÃ¤re eine
    Berechnung pro Zeit, da auf dem Raspberry Pi die Framerate von 60FPS nicht
-   garantiert werden kann, und bei vielen großen Gobos absinkt.
+   garantiert werden kann, und bei vielen groÃŸen Gobos absinkt.
  - der Animationsregler ist wirkungslos, das Steuern von Videos und gif's ist
    (noch) nicht implementiert.
  - es kann zu Problemen bei der Framerate kommen, wenn man viele Gobos
-   (über Anzahl Regler) verwendet und diese recht groß skaliert
-   Geschätzte Faustformel: solange Skalierung, Anzahl und Zoom, so eingestellt
-   sind, dass sich keine Gobos überlappen, sollten keine Probleme auftreten.
-   (Überlappung von anderen Laser Instanzen sind hierbei nicht gemeint)
- - man kann wählen ob sich die Zoomfunktion sich wie im Original verhält oder
+   (Ã¼ber Anzahl Regler) verwendet und diese recht groÃŸ skaliert
+   GeschÃ¤tzte Faustformel: solange Skalierung, Anzahl und Zoom, so eingestellt
+   sind, dass sich keine Gobos Ã¼berlappen, sollten keine Probleme auftreten.
+   (Ãœberlappung von anderen Laser Instanzen sind hierbei nicht gemeint)
+ - man kann wÃ¤hlen ob sich die Zoomfunktion sich wie im Original verhÃ¤lt oder
    in einen Kreis zoomt
- - Es wird das Programm mediainfo benötigt:
+ - Es wird das Programm mediainfo benÃ¶tigt:
    sudo apt-get install mediainfo

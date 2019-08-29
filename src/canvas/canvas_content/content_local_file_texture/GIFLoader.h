@@ -3,10 +3,10 @@
  * | gif.c |
  * +-------+
  *
- * Stellt die Funktion loadAnimatedGif() zur verfügung, mit der man die Frames
+ * Stellt die Funktion loadAnimatedGif() zur verfÃ¼gung, mit der man die Frames
  * eines animiertes (oder auch normales) GIF-Bild im raw RGBA Format in den
  * Speicher lesen kann.
- * z.B. nützlich um gif Bilder als OpenGL Textur verwenden zu können.
+ * z.B. nÃ¼tzlich um gif Bilder als OpenGL Textur verwenden zu kÃ¶nnen.
  *
  * (c) 2013 Moritz Heinemann <mo@blog-srv.net>
  *

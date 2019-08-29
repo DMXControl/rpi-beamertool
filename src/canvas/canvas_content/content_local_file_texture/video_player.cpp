@@ -327,7 +327,7 @@ void VideoPlayer::video_decode_test1() {
    ilclient_disable_tunnel(tunnel+2);
    ilclient_teardown_tunnels(tunnel);
 
-   // ##### TODO ### stürtzt ab # warum???
+   // ##### TODO ### stÃ¼rtzt ab # warum???
    //ilclient_state_transition(list, OMX_StateIdle);
    //ilclient_state_transition(list, OMX_StateLoaded);
 
@@ -542,7 +542,7 @@ void VideoPlayer::video_decode_test2() {
    ilclient_disable_tunnel(tunnel+2);
    ilclient_teardown_tunnels(tunnel);
 
-   // ##### TODO ### stürtzt ab # warum???
+   // ##### TODO ### stÃ¼rtzt ab # warum???
    //ilclient_state_transition(list, OMX_StateIdle);
    //ilclient_state_transition(list, OMX_StateLoaded);
 
@@ -757,7 +757,7 @@ void VideoPlayer::video_decode_test3() {
    ilclient_disable_tunnel(tunnel+2);
    ilclient_teardown_tunnels(tunnel);
 
-   // ##### TODO ### stürtzt ab # warum???
+   // ##### TODO ### stÃ¼rtzt ab # warum???
    //ilclient_state_transition(list, OMX_StateIdle);
    //ilclient_state_transition(list, OMX_StateLoaded);
 
