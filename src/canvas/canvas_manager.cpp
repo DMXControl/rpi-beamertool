@@ -1,9 +1,9 @@
 // canvas/canvas_manager.cpp
 
-#include "canvas/canvas_manager.h"
-#include "canvas/canvas.h"
-#include "canvas/renderer.h"
-#include "canvas/fps_counter.h"
+#include "canvas_manager.h"
+#include "canvas.h"
+#include "renderer.h"
+#include "fps_counter.h"
 
 using namespace std;
 using namespace Beamertool;

@@ -3,7 +3,7 @@
 #ifndef CONTENT_EXAMPLE_PLUGIN_H
 #define CONTENT_EXAMPLE_PLUGIN_H
 
-#include "canvas/canvas_content/content_interface.h"
+#include "../content_interface.h"
 
 namespace Beamertool {
 

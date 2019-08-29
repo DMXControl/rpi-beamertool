@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "canvas/canvas_content/content_local_file_texture/GIFLoader.h"
+#include "GIFLoader.h"
 
 using namespace Beamertool;
 

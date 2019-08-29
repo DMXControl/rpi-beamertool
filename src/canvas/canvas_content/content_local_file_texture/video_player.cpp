@@ -8,7 +8,7 @@ extern "C" {
 #include "ilclient.h"
 }
 #include <thread>
-#include "canvas/canvas_content/content_local_file_texture/video_player.h"
+#include "video_player.h"
 
 using namespace std;
 using namespace Beamertool;

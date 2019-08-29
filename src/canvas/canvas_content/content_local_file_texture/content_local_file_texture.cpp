@@ -4,9 +4,9 @@
 #include "GLES/gl.h"
 #include "EGL/egl.h"
 #include "EGL/eglext.h"
-#include "canvas/canvas_content/content_local_file_texture/content_local_file_texture.h"
-#include "canvas/canvas_content/content_local_file_texture/texture.h"
-#include "canvas/canvas_content/content_local_file_texture/video_player.h"
+#include "content_local_file_texture.h"
+#include "texture.h"
+#include "video_player.h"
 
 using namespace std;
 using namespace Beamertool;

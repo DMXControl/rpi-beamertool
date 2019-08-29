@@ -4,7 +4,7 @@
 #define CONTENT_INTERFACE_H
 
 #include <string>
-#include "canvas/canvas.h"
+#include "../canvas.h"
 
 namespace Beamertool {
 

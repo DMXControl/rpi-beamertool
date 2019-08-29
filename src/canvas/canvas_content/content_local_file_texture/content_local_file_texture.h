@@ -3,9 +3,9 @@
 #ifndef CONTENT_LOCAL_FILE_TEXTURE_H
 #define CONTENT_LOCAL_FILE_TEXTURE_H
 
-#include "canvas/canvas_content/content_interface.h"
-#include "canvas/canvas_content/content_local_file_texture/texture.h"
-#include "canvas/canvas_content/content_local_file_texture/video_player.h"
+#include "../content_interface.h"
+#include "texture.h"
+#include "video_player.h"
 
 #define TEX_PATH "./textures/"  // Verzeichnis in dem die Texturen sind
 #define TEX_MAX 256             // Limitierung der geladenen Texturen

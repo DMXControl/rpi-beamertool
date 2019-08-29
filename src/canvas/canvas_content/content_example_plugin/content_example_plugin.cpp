@@ -4,7 +4,7 @@
 #include "GLES/gl.h"
 #include "EGL/egl.h"
 #include "EGL/eglext.h"
-#include "canvas/canvas_content/content_example_plugin/content_example_plugin.h"
+#include "content_example_plugin.h"
 
 using namespace std;
 using namespace Beamertool;

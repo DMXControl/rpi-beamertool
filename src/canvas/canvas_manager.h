@@ -5,7 +5,7 @@
 
 #include <vector>
 #include <string>
-#include "canvas/canvas_classes.h"
+#include "canvas_classes.h"
 
 namespace Beamertool {
 

@@ -7,9 +7,9 @@
 #include <cmath>
 #include <cassert>
 #include <vector>
-#include "canvas/canvas.h"
-#include "canvas/canvas_content/content_manager.h"
-#include "canvas/renderer.h"
+#include "canvas.h"
+#include "canvas_content/content_manager.h"
+#include "renderer.h"
 
 using namespace std;
 using namespace Beamertool;

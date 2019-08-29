@@ -1,6 +1,6 @@
 // canvas/canvas.cpp
 
-#include "canvas/canvas.h"
+#include "canvas.h"
 
 using namespace std;
 using namespace Beamertool;

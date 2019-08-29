@@ -8,8 +8,8 @@
 #include "EGL/egl.h"
 #include "EGL/eglext.h"
 #include <vector>
-#include "canvas/canvas_classes.h"
-#include "canvas/canvas_content/content_manager.h"
+#include "canvas_classes.h"
+#include "canvas_content/content_manager.h"
 
 namespace Beamertool {
 

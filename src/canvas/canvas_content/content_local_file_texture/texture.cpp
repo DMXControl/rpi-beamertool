@@ -8,10 +8,10 @@
 #include <time.h>
 #include <unistd.h>
 #include <string>
-#include "canvas/canvas_content/content_local_file_texture/texture.h"
-#include "canvas/canvas_content/content_local_file_texture/video_player.h"
-#include "canvas/canvas_content/content_local_file_texture/GIFLoader.h"
-#include "canvas/canvas_content/content_local_file_texture/stb_image.h"
+#include "texture.h"
+#include "video_player.h"
+#include "GIFLoader.h"
+#include "stb_image.h"
 
 using namespace std;
 using namespace Beamertool;

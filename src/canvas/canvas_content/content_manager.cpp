@@ -6,11 +6,11 @@
 #include "EGL/eglext.h"
 #include <vector>
 #include <string>
-#include "canvas/canvas_content/content_interface.h"
-#include "canvas/canvas_content/content_manager.h"
+#include "content_interface.h"
+#include "content_manager.h"
 // TODO implement a plugin interface
-#include "canvas/canvas_content/content_example_plugin/content_example_plugin.h"
-#include "canvas/canvas_content/content_local_file_texture/content_local_file_texture.h"
+#include "content_example_plugin/content_example_plugin.h"
+#include "content_local_file_texture/content_local_file_texture.h"
 
 using namespace std;
 using namespace Beamertool;

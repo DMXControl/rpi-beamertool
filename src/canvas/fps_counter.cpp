@@ -2,7 +2,7 @@
 
 #include <sys/time.h>
 #include <time.h>
-#include "canvas/fps_counter.h"
+#include "fps_counter.h"
 
 using namespace std;
 using namespace Beamertool;
