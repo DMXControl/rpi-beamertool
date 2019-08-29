@@ -6,5 +6,5 @@ using namespace std;
 using namespace Beamertool;
 
 ContentInterface::~ContentInterface() {
-    
+
 }

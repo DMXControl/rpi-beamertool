@@ -19,30 +19,30 @@
 namespace Beamertool {
 
     class ConfigLoader {
-    
+
     public:
         /**
          * standard constructor
          */
         ConfigLoader();
-        
+
         /**
          * read config file line by line
          */
         void loadConfigFile();
-        
+
         /**
          * remove comments and whitespaces from a line
          * @param line the line to clean
          */
         void cleanLine(std::string &line);
-        
+
         /**
          * parse a clean line to a config variable
          * @param line the clean config line
          */
         void parseCleanLine(std::string &line);
-        
+
         // get the config values
         int getArtnetUniverse();
         int getArtnetSubnet();
@@ -51,7 +51,7 @@ namespace Beamertool {
         int getZoomType();
         float getScalingMultiplier();
         int getLedGpioPin();
-        
+
     private:
         int artnet_universe;        // Art-Net Universe
         int artnet_subnet;          // Art-Net Subnet

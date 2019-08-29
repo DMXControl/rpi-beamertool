@@ -15,7 +15,7 @@
 namespace Beamertool {
 
     class ContentManager {
-    
+
     public:
         /**
          * standard constructor

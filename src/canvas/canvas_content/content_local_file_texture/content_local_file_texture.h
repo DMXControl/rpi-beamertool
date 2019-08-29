@@ -14,7 +14,7 @@
 namespace Beamertool {
 
     class ContentLocalFileTexture : public ContentInterface {
-    
+
     public:
         ContentLocalFileTexture(EGLDisplay* d, EGLSurface* s, EGLContext* c);
         ~ContentLocalFileTexture();

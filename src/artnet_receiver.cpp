@@ -83,7 +83,7 @@ ArtnetReceiver::~ArtnetReceiver() {
     shutdown(this->s,0);
     net_listener_thread.join();
     close(this->s);
-    
+
     // poweroff led
     setLED(0);
     quitLED();
@@ -385,7 +385,7 @@ void ArtnetReceiver::getNetworkInterfacesList() {
 
         struct sockaddr_in * entry_address = (struct sockaddr_in *) list_entry->ifa_addr;
         struct sockaddr_in * entry_broadcast_address = (struct sockaddr_in *) list_entry->ifa_broadaddr;
-        
+
         // Fill interfaces Vector with AF_INET interfaces
         // Ignore lo (127.0.0.1) and if "eth0" exist add "eth0" as first entry
         if (entry_address->sin_family == AF_INET && strcmp(list_entry->ifa_name, "lo") != 0) {
@@ -428,7 +428,7 @@ void ArtnetReceiver::initLED() {
         FILE *ptr;
 
         ptr = fopen("/sys/class/gpio/export", "w");
-        fprintf(ptr, "%d", this->led_gpio_pin);	// enable GPIO-Port	
+        fprintf(ptr, "%d", this->led_gpio_pin);	// enable GPIO-Port
         fclose(ptr);
 
         char gpio[50];

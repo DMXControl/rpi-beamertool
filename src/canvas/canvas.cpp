@@ -28,7 +28,7 @@ Canvas::Canvas(string content_type) {
 }
 
 Canvas::~Canvas() {
-    
+
 }
 
 void Canvas::frameStep() {

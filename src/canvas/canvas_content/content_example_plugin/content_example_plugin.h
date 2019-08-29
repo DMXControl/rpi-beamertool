@@ -8,7 +8,7 @@
 namespace Beamertool {
 
     class ContentExamplePlugin : public ContentInterface {
-    
+
     public:
         ContentExamplePlugin(EGLDisplay* d, EGLSurface* s, EGLContext* c);
         ~ContentExamplePlugin();

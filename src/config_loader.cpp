@@ -44,7 +44,7 @@ void ConfigLoader::cleanLine(string &line) {
 }
 
 void ConfigLoader::parseCleanLine(string &line) {
-    
+
     // SUBNET
     if (line.compare(0, 7, "SUBNET=") == 0) {
         line.erase(0, 7);
@@ -52,7 +52,7 @@ void ConfigLoader::parseCleanLine(string &line) {
         if (this->artnet_subnet < 0 || this->artnet_subnet > 15) {
             this->artnet_subnet = CFG_STD_ARTNET_SUBNET;
         }
-    
+
     // UNIVERSE
     } else if (line.compare(0, 9, "UNIVERSE=") == 0) {
         line.erase(0, 9);
@@ -60,7 +60,7 @@ void ConfigLoader::parseCleanLine(string &line) {
         if (this->artnet_universe < 0 || this->artnet_universe > 15) {
             this->artnet_universe = CFG_STD_ARTNET_UNIVERSE;
         }
-    
+
     // ANZAHL
     } else if (line.compare(0, 7, "ANZAHL=") == 0) {
         line.erase(0, 7);
@@ -68,7 +68,7 @@ void ConfigLoader::parseCleanLine(string &line) {
         if (this->lasersim_num < 1 || this->lasersim_num > 25) {
             this->lasersim_num = CFG_STD_LASERSIM_NUM;
         }
-    
+
     // DMX_START
     } else if (line.compare(0, 10, "DMX_START=") == 0) {
         line.erase(0, 10);
@@ -76,14 +76,14 @@ void ConfigLoader::parseCleanLine(string &line) {
         if (this->lasersim_dmx_start < 1 || this->lasersim_dmx_start > 490) {
             this->lasersim_dmx_start = CFG_STD_LASERSIM_DMX_START;
         }
-    
+
     // ZOOM
     } else if (line.compare(0, 5, "ZOOM=") == 0) {
         line.erase(0, 5);
         if (stoi(line) == 2) {
             this->zooming_type = 2;
         }
-    
+
     // SCAL_MULT
     } else if (line.compare(0, 10, "SCAL_MULT=") == 0) {
         line.erase(0, 10);
@@ -91,7 +91,7 @@ void ConfigLoader::parseCleanLine(string &line) {
         if (this->scaling_multiplier <= 0.f || this->scaling_multiplier >= 10.0f) {
             this->scaling_multiplier = CFG_STD_SCALE_MULTIPLIER;
         }
-    
+
     // LED_GPIO_PIN
     } else if (line.compare(0, 13, "LED_GPIO_PIN=") == 0) {
         line.erase(0, 13);

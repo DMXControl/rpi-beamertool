@@ -41,7 +41,7 @@ VideoPlayer::~VideoPlayer() {
 }
 
 int VideoPlayer::startFreePlayer(std::string filename, GLuint * video_tex_ptr) {
-    
+
     int free_player = 0;
     for (int i=0; i<VIDEOPLAYER_NUM; ++i) {
         if (this->player_is_free[i]) {
@@ -50,7 +50,7 @@ int VideoPlayer::startFreePlayer(std::string filename, GLuint * video_tex_ptr) {
             break;
         }
     }
-    
+
     if(free_player > 0) {
         if (free_player == 1) {
             this->eglImage1 = eglCreateImageKHR(this->display, this->context, EGL_GL_TEXTURE_2D_KHR, (EGLClientBuffer)(*video_tex_ptr), 0);
@@ -78,7 +78,7 @@ int VideoPlayer::startFreePlayer(std::string filename, GLuint * video_tex_ptr) {
             player_thread_3 = thread(&VideoPlayer::video_decode_test3, this);
         }
     }
-    
+
     return free_player;
 }
 
@@ -379,7 +379,7 @@ void VideoPlayer::video_decode_test2() {
       //return (void *)-4;
    }
 
-   
+
    // callback
    ilclient_set_fill_buffer_done_callback(client, my_fill_buffer_done2, this);
 
@@ -594,7 +594,7 @@ void VideoPlayer::video_decode_test3() {
       //return (void *)-4;
    }
 
-   
+
    // callback
    ilclient_set_fill_buffer_done_callback(client, my_fill_buffer_done3, this);
 

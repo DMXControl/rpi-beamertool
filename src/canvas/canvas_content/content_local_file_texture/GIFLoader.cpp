@@ -27,23 +27,23 @@ unsigned char * GIFLoader::readFileToBuffer ( const char * fileName, long * file
    unsigned long fileSize;
    unsigned char * buffer = NULL;
    size_t result;
-   
+
    file = fopen ( fileName, "rb" );
    if (file != NULL) {
-      
+
       // Dateigröße bestimmen
       fseek (file , 0 , SEEK_END);
       fileSize = ftell (file);
       rewind (file);
-      
+
       // Speicher für die Datei zuteilen
       buffer = (unsigned char*) malloc (sizeof(unsigned char)*fileSize);
-      
+
       if (buffer != NULL) {
-         
+
          // Datei in buffer kopieren
          result = fread (buffer,1,fileSize,file);
-         
+
          // Fehler check
          if (result != fileSize) {
             free(buffer);
@@ -132,11 +132,11 @@ void GIFLoader::freeTableContent(TableHead * pTable) {
 void GIFLoader::initTable(TableHead * pTable, int initLength) {
    // Tabelle leeren
    freeTableContent(pTable);
-   
+
    // Tabelleneinträge anlegen
    (*pTable).length = initLength;
    (*pTable).content = (TableCell*) malloc(initLength * sizeof(TableCell));
-   
+
    // Inhalt der Tabelleneinträge einfügen
    int i;
    for ( i=0; i < initLength; i++) {
@@ -179,10 +179,10 @@ void GIFLoader::freeTable(TableHead ** pTable) {
 void GIFLoader::addTableEntryWithOldContent(TableHead * pTable, int oldEntry, unsigned char newChar) {
    // Speicher der Tabelle vergrößern
    (*pTable).content = (TableCell *) realloc((*pTable).content, ((*pTable).length + 1) * sizeof(TableCell));
-   
+
    // Länge des neuen eintrags bestimmen
    int newEntrySize = (*pTable).content[oldEntry].length + 1;
-   
+
    // Länge des neuen Eintrags speichern
    (*pTable).content[(*pTable).length].length = newEntrySize;
    // Speicher für neuen Eintrag anfordern
@@ -232,14 +232,14 @@ int GIFLoader::getNextCode(unsigned char * codeStream, int * bytePos, int * bitP
    }
    // Code auf richtige Bit Position schieben und passend zuschneiden.
    CODE = (CODE >> *bitPos) & bitPattern;
-   
+
    // Position auf nächsten Code setzten
    *bitPos += bitWidth;
    while (*bitPos >= 8) {
       (*bytePos)++;
       *bitPos -= 8;
    }
-   
+
    return CODE;
 }
 
@@ -283,10 +283,10 @@ void GIFLoader::insertChar(unsigned char input, unsigned char * dataStream, int 
  *   länger der Daten = imageSize, sonst NULL
  */
 unsigned char * GIFLoader::LZW_decompression ( unsigned char * codeStream, int codeStreamLength, int LZW_minBitLength, int imageSize) {
-   
+
    int error = 0; // Error Flag
    int loop = 1;  // Loop Flag
-   
+
    unsigned char * outData = (unsigned char*) malloc (imageSize); // dekomprimierte Daten
    int outDataPos = 0;                           // aktuelle Position auf den dekomprimierten Daten
    int bitWidth = LZW_minBitLength + 1;          // Breite der Codes in Bit
@@ -295,14 +295,14 @@ unsigned char * GIFLoader::LZW_decompression ( unsigned char * codeStream, int c
    int bitPos = 0;                               // aktuelle Position im Code Stream
    int CLR = 1 << LZW_minBitLength;              // Clear Code gleichzeitig auch Startgröße der Tabelle
    int EOD = CLR + 1;                            // End od Data Code
-   
+
    TableHead * pTable = getEmptyTable();         // Pointer auf LZW Tabelle
    initTable(pTable, CLR + 2);                   // Tabelle initialisieren
-   
+
    // aktueller Code
    int CODE = getNextCode(codeStream, &bytePos, &bitPos, bitWidth, bitPattern, codeStreamLength, &error);
    int CODE_1; // vorheriger Code
-   
+
    if(CODE == CLR) {
       // CLR Code an Anfang ignorieren, da Tabelle schon initialisiert ist.
       // nimm nächsten CODE
@@ -316,23 +316,23 @@ unsigned char * GIFLoader::LZW_decompression ( unsigned char * codeStream, int c
    if (CODE < CLR) {
       insertChar((unsigned char) CODE, outData, &outDataPos, imageSize, &error);
    }
-   
+
    while(loop && !error) {
       CODE_1 = CODE;
       CODE = getNextCode(codeStream, &bytePos, &bitPos, bitWidth, bitPattern, codeStreamLength, &error);
-      
+
       if (CODE == CLR) {
          // Clear Table
          initTable(pTable, CLR + 2);
          bitWidth = LZW_minBitLength + 1;
          bitPattern = (1 << bitWidth) - 1;
-         
+
          // nächsten CODE laden. CODE_1 wird nicht benötigt und beim nächsten Schleifendurchlauf neu gesetzt
          CODE = getNextCode(codeStream, &bytePos, &bitPos, bitWidth, bitPattern, codeStreamLength, &error);
-         
+
          // nächsten Code ausgeben
          insertChar((unsigned char) CODE, outData, &outDataPos, imageSize, &error);
-         
+
       } else if(CODE == EOD) {
          loop = 0;
       } else if(CODE < (*pTable).length) { // Fall: CODE ist in Tabelle
@@ -357,7 +357,7 @@ unsigned char * GIFLoader::LZW_decompression ( unsigned char * codeStream, int c
          // Hänge K an den Wert zum Index CODE_1 an und mach daraus neuen Tabelleneintrag
          addTableEntryWithOldContent(pTable, CODE_1, k);
       }
-      
+
       // Wenn Anzahl der Tabelleneinträge größer ist, als mit aktuellem
       // Bitmuster darstellbar wären, erhöhe Bitmuster um eins
       if ((*pTable).length > (1 << bitWidth) - 1) {
@@ -369,15 +369,15 @@ unsigned char * GIFLoader::LZW_decompression ( unsigned char * codeStream, int c
          bitPattern = (1 << bitWidth) - 1;
       }
    }
-   
+
    // Tabelle löschen
    freeTable(&pTable);
-   
+
    // Fehlertest
    if (outDataPos != imageSize) {
       error = 1;
    }
-   
+
    if (error) {
       free (outData);
       return NULL;
@@ -399,18 +399,18 @@ unsigned char * GIFLoader::LZW_decompression ( unsigned char * codeStream, int c
  */
 GifHeader GIFLoader::loadHeaderFromFileBuffer (unsigned char * fileBuffer) {
    GifHeader header;
-   
+
    // Load Header
    header.signature[0] = fileBuffer[0];
    header.signature[1] = fileBuffer[1];
    header.signature[2] = fileBuffer[2];
    header.signature[3] = 0; // Terminate string
-   
+
    header.version[0] = fileBuffer[3];
    header.version[1] = fileBuffer[4];
    header.version[2] = fileBuffer[5];
    header.version[3] = 0; // Terminate string
-   
+
    return header;
 }
 
@@ -427,7 +427,7 @@ GifHeader GIFLoader::loadHeaderFromFileBuffer (unsigned char * fileBuffer) {
  */
 GifScreenDescriptor GIFLoader::loadScreenDescriptorFromFileBuffer (unsigned char * fileBuffer) {
    GifScreenDescriptor screen_descriptor;
-   
+
    // Load Screen Descriptor
    screen_descriptor.width = (((int) fileBuffer[7]) << 8) +((int) fileBuffer[6]);
    screen_descriptor.height = (((int) fileBuffer[9]) << 8) +((int) fileBuffer[8]);
@@ -438,7 +438,7 @@ GifScreenDescriptor GIFLoader::loadScreenDescriptorFromFileBuffer (unsigned char
    screen_descriptor.globalColorTableSize = (fileBuffer[10] & 0x7);
    screen_descriptor.backgroundColorIndex = fileBuffer[11];
    screen_descriptor.pixelAspectRatio = fileBuffer[12];
-   
+
    return screen_descriptor;
 }
 
@@ -481,12 +481,12 @@ GifImageDescriptor GIFLoader::loadImageDescriptorFromFileBuffer (unsigned char *
  *   - int             height       Höhe
  */
 void GIFLoader::deinterlace(unsigned char * codeStream, int width, int height) {
-   
+
    unsigned char * deCodeStream = (unsigned char*) malloc(width * height * sizeof(unsigned char));
    int i = 0;
    int j = 0;
    int c = 0;
-   
+
    // Pass 1
    for ( i = 0; i < height; i += 8 ) {
       for( j = 0; j < width; j++ ) {
@@ -515,7 +515,7 @@ void GIFLoader::deinterlace(unsigned char * codeStream, int width, int height) {
       }
       c++;
    }
-   
+
    // Zurückkopieren
    memcpy(codeStream, deCodeStream, width * height * sizeof(unsigned char));
    free(deCodeStream);
@@ -553,12 +553,12 @@ void GIFLoader::deinterlace(unsigned char * codeStream, int width, int height) {
  *   werden.
  */
 unsigned char ** GIFLoader::loadAnimatedGif ( const char * fileName, int * width, int * height, GifAnimationInfo * animationInfo ) {
-   
+
    // Datei laden
    long fileSize = 0;
    unsigned char * gifFileBuffer = readFileToBuffer(fileName, &fileSize);
    long bufferPosition = 0;
-   
+
    // Fehlerkontrolle
    if(gifFileBuffer == NULL) {
       //printf("Bad file!\n");
@@ -570,28 +570,28 @@ unsigned char ** GIFLoader::loadAnimatedGif ( const char * fileName, int * width
       free(gifFileBuffer);
       return NULL;
    }
-   
+
    // Header und Screen Descriptor auslesen
    //GifHeader header = loadHeaderFromFileBuffer(gifFileBuffer); // aktuell unbenutzt
    GifScreenDescriptor screen_descriptor = loadScreenDescriptorFromFileBuffer(gifFileBuffer);
    int colors_in_global_map = 1 << ( screen_descriptor.globalColorTableSize + 1 ); // 2^(var + 1)
-   
+
    // Infos - nur zum Entwickeln gedacht
    //printf("%s: Filesize: %i\n", fileName, (int) fileSize);
    //printf("Version: %s\n", header.version);
    //printf("Width: %i  Height: %i\n",screen_descriptor.width,screen_descriptor.height);
    //printf("Colors in Map: %i\n",colors_in_global_map);
-   
+
    // Buffer hinter Header setzten
    bufferPosition = 13;
-   
+
    // Fehlerkontrolle
    if (fileSize <= colors_in_global_map * 3 + 13) {
       //printf("Bad FileSize!\n");
       free(gifFileBuffer);
       return NULL;
    }
-   
+
    // Globale Farb Tabelle auslesen wenn Flag gesetzt
    RGB * globalColorMap = NULL;
    if (screen_descriptor.globalColorTableFlag) {
@@ -604,11 +604,11 @@ unsigned char ** GIFLoader::loadAnimatedGif ( const char * fileName, int * width
       }
       bufferPosition += 3 * colors_in_global_map;
    }
-   
+
    // Bild Array anlegen
    unsigned char ** images = (unsigned char**) malloc(sizeof(unsigned char*));
    images[0] = (unsigned char*) calloc(screen_descriptor.width*screen_descriptor.height, 4);
-   
+
    // Hintergrundfarbe setzten
    if (screen_descriptor.globalColorTableFlag) { // Steht auch für Background Color
       int i;
@@ -619,23 +619,23 @@ unsigned char ** GIFLoader::loadAnimatedGif ( const char * fileName, int * width
          images[0][4*i + 3] = 0xFF;
       }
    }
-   
+
    // Variablen für Animation Informationen
    GifAnimationInfo animInfo;
    animInfo.numberOfImages = 0;
    animInfo.isLoopImage = 0;
    animInfo.loopCount = 0;
    animInfo.delayArray = (int*) calloc(1, sizeof(int));
-   
+
    // Loop kontrolle
    char reachedTrailer = 0;
    char loop = 1;
-   
+
    // Framedetails
    GifGraphicControlExtension GCE;   // Inhalt der GraphicControlExtension
    char useGCE = 0;                  // zeigt an, dass die Graphic Control Extension gesetzt wurde
    char newImage = 0;                // Zeigt an, dass delay>0 war und somit ein neues Frame begonnen werden soll
-   
+
    // Parse Gif Content
    while ( loop && bufferPosition <= fileSize ) {
       // Gif Blöcke unterscheiden
@@ -647,7 +647,7 @@ unsigned char ** GIFLoader::loadAnimatedGif ( const char * fileName, int * width
             break;
          case ',' : { // Klammern um Block zu erzeugen da in switch keine Variablen erzeugt werden dürfen.
             // Bildblock
-            
+
             // Wenn delay bei vorherigem Frame: neues Beginnen
             if(newImage) {
                // Image array vergrößern
@@ -661,13 +661,13 @@ unsigned char ** GIFLoader::loadAnimatedGif ( const char * fileName, int * width
                animInfo.numberOfImages++;
                newImage = 0;
             }
-            
+
             // Image Descriptor des Bild Blocks auslesen
             GifImageDescriptor image_descriptor = loadImageDescriptorFromFileBuffer (gifFileBuffer, bufferPosition);
             int colors_in_local_map = 1 << ( image_descriptor.localColorTableSize + 1 ); // 2^(var + 1)
             // Buffer Position hinter Image Descriptor schieben
             bufferPosition += 10;
-            
+
             // Lokale Farb Tabelle auslesen
             RGB * localColorMap = NULL;
             if (image_descriptor.localColorTableFlag) {
@@ -680,21 +680,21 @@ unsigned char ** GIFLoader::loadAnimatedGif ( const char * fileName, int * width
                }
                bufferPosition += 3 * colors_in_local_map;
             }
-            
+
             // min Code Size auslesen
             int LZW_minCodeSize = gifFileBuffer[bufferPosition];
-            
+
             // Code Size bestimmen
             int code_size = 0;
-            
+
             bufferPosition++;
             int bufPos = bufferPosition; // Kopie anlegen beide Zeigen auf Länge des ersten Datenblocks
-            
+
             while (gifFileBuffer[bufPos] != 0) {
                code_size += gifFileBuffer[bufPos];
                bufPos += gifFileBuffer[bufPos] + 1;
             }
-            
+
             // Komprimierte Daten in neuen Buffer kopieren
             unsigned char compressed_data[code_size];
             int dataPos = 0;
@@ -706,23 +706,23 @@ unsigned char ** GIFLoader::loadAnimatedGif ( const char * fileName, int * width
                }
                bufferPosition += gifFileBuffer[bufferPosition] + 1;
             }
-            
+
             // Stream Decodieren
             int pixels = image_descriptor.width*image_descriptor.height;
             unsigned char * decompressed_data = LZW_decompression(compressed_data, code_size, LZW_minCodeSize, pixels);
-            
+
             if(decompressed_data == NULL) {
                loop = 0;
                free(localColorMap);
                free(decompressed_data);
                break;
             }
-            
+
             // Deinterlace
             if (image_descriptor.interlaceFlag) {
                deinterlace(decompressed_data, image_descriptor.width, image_descriptor.height);
             }
-            
+
             // Farb Tabelle auswählen
             RGB * colorMap;
             if (image_descriptor.localColorTableFlag == 0) { // Use global Color Table
@@ -730,7 +730,7 @@ unsigned char ** GIFLoader::loadAnimatedGif ( const char * fileName, int * width
             } else {
                colorMap = localColorMap;
             }
-            
+
             // Farben für den jeweiligen Index einsetzten
             int i,j;
             for (i=0; i<image_descriptor.height; i++) {
@@ -749,17 +749,17 @@ unsigned char ** GIFLoader::loadAnimatedGif ( const char * fileName, int * width
                   }
                }
             }
-            
+
             // Delay Zeit speichern
             if(useGCE && GCE.delayTime > 0) {
                animInfo.delayArray[animInfo.numberOfImages] = GCE.delayTime;
                newImage = 1;
             }
             useGCE = 0;
-            
+
             free(localColorMap);
             free(decompressed_data);
-            
+
             bufferPosition++; // auf nächsten Block zeigen
             }
             break;
@@ -773,21 +773,21 @@ unsigned char ** GIFLoader::loadAnimatedGif ( const char * fileName, int * width
                   break;
                case 0xF9:
                   //printf("Ex:   Graphic Control Extension\n");
-                  
+
                   useGCE = 1;
-                  
+
                   // Block Size
                   if(gifFileBuffer[bufferPosition+1] != 4) {
                      loop = 0;
                   }
-                  
+
                   // Graphic Control Extension auslesen
                   GCE.disposalMethod = (gifFileBuffer[bufferPosition+2] & 0x1C) >> 2;
                   GCE.userInputFlag = (gifFileBuffer[bufferPosition+2] & 0x02) >> 1;
                   GCE.transparencyFlag = (gifFileBuffer[bufferPosition+2] & 0x01);
                   GCE.delayTime = (((int) gifFileBuffer[bufferPosition+4]) << 8) +((int) gifFileBuffer[bufferPosition+3]);
                   GCE.transparentColorIndex = gifFileBuffer[bufferPosition+5];
-                  
+
                   break;
                case 0xFE:
                   //printf("Ex:   Comment\n");
@@ -816,7 +816,7 @@ unsigned char ** GIFLoader::loadAnimatedGif ( const char * fileName, int * width
                   break;
                default:
                   //printf("Ex:   unbekannter Block mit ID: %i\n", gifFileBuffer[bufferPosition]);
-                  
+
                   break;
             }
             // Block überspringen (wird hier gemacht, dass auch unbekannte Blöcke übersprungen werden)
@@ -837,7 +837,7 @@ unsigned char ** GIFLoader::loadAnimatedGif ( const char * fileName, int * width
    // terminate
    free (gifFileBuffer);
    free (globalColorMap);
-   
+
    if (reachedTrailer) {
       animInfo.numberOfImages++; // Number of Images ist die ArrayPosition des aktuellen Bildes. Da bei 0 begonnen wird +1
       *width = screen_descriptor.width;
@@ -845,7 +845,7 @@ unsigned char ** GIFLoader::loadAnimatedGif ( const char * fileName, int * width
       *animationInfo = animInfo;
       return images;
    }
-   
+
    // Wenn Schleife abgebrichen wurde ohne, dass der gif Trailer erreicht wurde
    // Speicher aufräumen und NULL zurückgeben.
    int i;
@@ -864,18 +864,18 @@ unsigned char ** GIFLoader::loadAnimatedGif ( const char * fileName, int * width
  */
 /*
 int main (int argc, const char* argv[]) {
-   
+
    char fileName[] = "./img/sample_2_animation.gif";
    unsigned char ** images;
    int width, height;
    GifAnimationInfo animationInfo;
-   
+
    if(argc == 2) {
       images = loadAnimatedGif ( (char*)argv[1], &width, &height, &animationInfo );
    } else {
       images = loadAnimatedGif ( fileName, &width, &height, &animationInfo );
    }
-   
+
    if (images != NULL) {
       printf("---[GIF]--------------------------------\n");
       printf("Width:      %i\n", width);
@@ -883,15 +883,15 @@ int main (int argc, const char* argv[]) {
       printf("imgNum:     %i\n", animationInfo.numberOfImages);
       printf("is LoopImg: %i\n", animationInfo.isLoopImage);
       printf("loopCount:  %i\n", animationInfo.loopCount);
-      
+
       int i;
       for(i=0; i<animationInfo.numberOfImages; i++) {
          printf("| %i ", animationInfo.delayArray[i]);
       }
       printf("\n");
-      
+
       for(i=0; i<animationInfo.numberOfImages; i++) {
-         
+
          char filename_buf[20] = "000.raw";
          if (i<10) {
             sprintf (filename_buf, "00%d.raw", i);
@@ -900,7 +900,7 @@ int main (int argc, const char* argv[]) {
          } else {
             sprintf (filename_buf, "%d.raw", i);
          }
-         
+
          FILE * pFile;
          pFile = fopen (filename_buf,"wb");
          if (pFile!=NULL)
@@ -908,10 +908,10 @@ int main (int argc, const char* argv[]) {
             fwrite (images[i] , 1, width*height*4, pFile);
             fclose (pFile);
          }
-         
+
       }
    }
-   
+
    printf("\n");
    return 0;
 }

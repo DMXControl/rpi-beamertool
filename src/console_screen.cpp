@@ -22,15 +22,15 @@ ConsoleScreen::ConsoleScreen(bool silent) {
 void ConsoleScreen::init(bool s) {
     quit = false;
     silent = s;
-    
+
     // Signal Listener
     signal(SIGINT, ConsoleScreen::signalReceiver);
     signal(SIGTERM, ConsoleScreen::signalReceiver);
-    
+
     if (!silent) {
         // Start NCurses
         initNCurses();
-        
+
         // Start Key Listener
         //key_listener_thread = thread(keyListener);
     }

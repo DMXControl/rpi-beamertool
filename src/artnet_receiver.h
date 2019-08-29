@@ -24,7 +24,7 @@ namespace Beamertool {
     };
 
     class ArtnetReceiver {
-    
+
     public:
         /**
          * standard constructor
@@ -37,50 +37,50 @@ namespace Beamertool {
          * @param led_gpio_pin      GPIO Pin for Packet receive status LED
          */
         ArtnetReceiver(CanvasManager * screen, int canvases_id, unsigned int universe, unsigned int subnet, int dmx_start, float scale_multiplier, int led_gpio_pin);
-        
+
         /**
          * destructor
          */
         ~ArtnetReceiver();
-    
+
     private:
         /**
          * net listener function
          */
         void netListener();
-        
+
         /**
          * artnet parser
          * @param len the length of the packet to parse
          * @return 0=artnet packet recveived -1=bad or no artnet packet
          */
         int parseArtNet(int len);
-        
+
         /**
          * Set Canvases from DMX universe
          */
         void updateCanvasValues();
-        
+
         /**
          * trim angels to range [0, 360)
          * @param angle angle to trim
          * @return angle in range [0, 360)
          */
         float correctAngleRange(float angle);
-        
+
         /**
          * send the ArtPollReply
          */
         void sendArtPollReply();
-        
+
         /**
          * update the list with local Interfaces
          */
         void getNetworkInterfacesList();
-        
+
         /**
          * WARNING: TODO (not implemented, meanwhile eth0 wisll be choosen)
-         * 
+         *
          * choose my IP and the Broadcast IP for ArtPollReply by comparing the
          * list of local Network Interfaces and the client IP.
          * This is (in my opinion) the easiest way to get my IP Address,
@@ -94,24 +94,24 @@ namespace Beamertool {
          *   parse the IP header of each received packet
          */
         void calcMyAndBroadcastIP(unsigned long client_ip);
-        
+
         /**
          * init the LED output (if root)
          */
         void initLED();
-        
+
         /**
          * set the led on or of (if root)
          * @param value 0=led off; 1=led on
          */
         void setLED(int value);
-        
+
         /**
          * reset the LED output (if root)
          */
         void quitLED();
-        
-        
+
+
         std::thread net_listener_thread;            // net listener thread
         bool quit;                                  // shall quit status
         CanvasManager * screen;                     // The Canvas Manager

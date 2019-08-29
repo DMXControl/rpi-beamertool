@@ -84,10 +84,10 @@ typedef struct {
 namespace Beamertool {
 
     class GIFLoader {
-    
+
     public:
         GIFLoader();
-        
+
     private:
         unsigned char * readFileToBuffer ( const char * fileName, long * fileSizeOutput );
         int isGifHeader(unsigned char * testMe);
@@ -103,10 +103,10 @@ namespace Beamertool {
         GifScreenDescriptor loadScreenDescriptorFromFileBuffer (unsigned char * fileBuffer);
         GifImageDescriptor loadImageDescriptorFromFileBuffer (unsigned char * fileBuffer, int bufferPos);
         void deinterlace(unsigned char * codeStream, int width, int height);
-        
+
     public:
         unsigned char ** loadAnimatedGif ( const char * fileName, int * width, int * height, GifAnimationInfo * animationInfo );
-        
+
     };
 }
 

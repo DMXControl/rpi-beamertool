@@ -24,7 +24,7 @@ Texture::Texture(int t_id, VideoPlayer * player, GLfloat texCoords_ptr[8], GLflo
     this->player = player;
     this->texCoords_ptr = texCoords_ptr;
     this->texCoordsVid_ptr = texCoordsVid_ptr;
-    
+
     load();
 }
 
@@ -50,44 +50,44 @@ void Texture::load() {
         filename += "0";
     }
     filename += to_string(this->texture_id);
-    
+
     if(fileExist(filename+".png")) {
         filename += ".png";
         this->texture_type = TEX_PNG;
         int n = 0;
         this->png_buffer = stbi_load(filename.c_str(), &this->size_x, &this->size_y, &n, 4); // 4Byte pro Pixel erzwingen
-        
+
         glGenTextures(1, &this->png_tex);
         glBindTexture(GL_TEXTURE_2D, this->png_tex);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (GLfloat)GL_NEAREST);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, (GLfloat)GL_NEAREST);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->size_x, this->size_y, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->png_buffer);
-        
+
         stbi_image_free(this->png_buffer);
         this->png_buffer = NULL;
-        
+
     } else if (fileExist(filename+".gif")) {
         filename += ".gif";
         this->texture_type = TEX_GIF;
-        
+
         GIFLoader GIFL;
         this->gif_buffer = GIFL.loadAnimatedGif(filename.c_str(), &this->size_x, &this->size_y, &this->gif_info);
-        
+
         struct timeval tv;
         gettimeofday (&tv, NULL);
         this->time_sec = (long) tv.tv_sec;
         this->time_usec = (long) tv.tv_usec;
-        
+
         this->gif_time = 0.d;
         int timeSum = 0;
         for (int z = 0; z < this->gif_info.numberOfImages; ++z) {
             timeSum += this->gif_info.delayArray[z];
             this->gif_info.delayArray[z] = timeSum;
         }
-        
+
         // TODO Fehler abfangen
         //if (images != NULL) {}
-        
+
         this->gif_tex = new GLuint[this->gif_info.numberOfImages];
         glGenTextures(this->gif_info.numberOfImages, this->gif_tex);
         for(int j = 0; j < this->gif_info.numberOfImages; ++j) {
@@ -98,13 +98,13 @@ void Texture::load() {
             free(this->gif_buffer[j]);
         }
         free(this->gif_buffer);
-        
+
     } else if (fileExist(filename+".h264")) {
         filename += ".h264";
         this->texture_type = TEX_VIDEO;
-        
+
         if(getVideoSize(filename, &this->size_x, &this->size_y)) {
-            
+
             glGenTextures(1, &this->video_tex);
             glBindTexture(GL_TEXTURE_2D, this->video_tex);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->size_x, this->size_y, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
@@ -112,9 +112,9 @@ void Texture::load() {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-            
+
             this->player_id = this->player->startFreePlayer(filename, &this->video_tex);
-            
+
             if (this->player_id <= 0) {
                 this->makeErrorTexture(0xFF, 0x0, 0x0, 0x3F);
             }
@@ -133,16 +133,16 @@ void Texture::makeErrorTexture(unsigned char r, unsigned char g, unsigned char b
     this->png_buffer[1] = g;
     this->png_buffer[2] = b;
     this->png_buffer[3] = a;  // 0x0 = transparent 0xFF = deckend
-    
+
     this->size_x = 1;
     this->size_y = 1;
-    
+
     glGenTextures(1, &this->none_tex);
     glBindTexture(GL_TEXTURE_2D, this->none_tex);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (GLfloat)GL_NEAREST);
     glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, (GLfloat)GL_NEAREST);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this->size_x, this->size_y, 0, GL_RGBA, GL_UNSIGNED_BYTE, this->png_buffer);
-    
+
     free(this->png_buffer);
     this->png_buffer = NULL;
 }
@@ -159,7 +159,7 @@ bool Texture::fileExist(const std::string &filename) {
 bool Texture::getVideoSize(std::string &filename, int *size_x, int *size_y) {
     string mediainfo_call("mediainfo --Inform=\"Video;info4beamertool|%Width%|%Height%|\" ");
     mediainfo_call.append(filename);
-    
+
     FILE *fp;
     char mediainfo_output[200];
     fp = popen(mediainfo_call.c_str(), "r");
@@ -169,7 +169,7 @@ bool Texture::getVideoSize(std::string &filename, int *size_x, int *size_y) {
     fgets(mediainfo_output, 200, fp);
     string size_str(mediainfo_output);
     pclose(fp);
-    
+
     if (size_str.compare(0, 16, "info4beamertool|") == 0) {
         size_str.erase(0, 16);
         string::size_type sz;
@@ -196,9 +196,9 @@ double Texture::getSecondsSinceLastCall() {
 }
 
 void Texture::setTexture() {
-    
+
     glTexCoordPointer(2, GL_FLOAT, 0, this->texCoords_ptr);
-    
+
     if (this->texture_type == TEX_NONE) {
         glBindTexture(GL_TEXTURE_2D, this->none_tex);
     } else if (this->texture_type == TEX_PNG) {

@@ -8,23 +8,23 @@
 namespace Beamertool {
 
     class FPS_Counter {
-    
+
     public:
         /**
          * standard constructor
          */
         FPS_Counter();
-        
+
         /**
          * call once for every generatet Frame
          */
         void tick();
-        
+
         /**
          * get the calculated Framerate
          */
         float getFPS();
-    
+
     private:
         long sec;                               // seconds since last frame
         long usec;                              // useconds since last frame

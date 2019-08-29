@@ -77,7 +77,7 @@ while true; do
     esac
 done
 if [ $install_web == 1 ]; then
-    aptitude -y install apache2 php5 
+    aptitude -y install apache2 php5
 
     # enable systemfunctions for webinterface
     echo "" >> /etc/sudoers

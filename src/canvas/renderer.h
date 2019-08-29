@@ -14,7 +14,7 @@
 namespace Beamertool {
 
     class Renderer {
-    
+
     public:
         /**
          * standard constructor
@@ -84,7 +84,7 @@ namespace Beamertool {
         GLfloat quadx[4*3];                 // the quad to draw a canvas
         GLfloat color[4*4];                 // the color to draw a canvas
         int zoom_type;                      // zooming type
-    
+
     };
 }
 

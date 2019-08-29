@@ -17,22 +17,22 @@ extern "C" {
 namespace Beamertool {
 
     class VideoPlayer {
-    
+
     public:
         VideoPlayer(EGLDisplay* d, EGLSurface* s, EGLContext* c);
         ~VideoPlayer();
         int startFreePlayer(std::string filename, GLuint * video_tex_ptr);
         void stopPlayer(int player_id);
         void sendStopSignal();
-    
+
     private:
-    
+
         bool player_is_free[VIDEOPLAYER_NUM];
-    
+
         EGLDisplay display;
         EGLSurface surface;
         EGLContext context;
-        
+
         GLuint vTex1;
         GLuint vTex2;
         GLuint vTex3;
@@ -54,14 +54,14 @@ namespace Beamertool {
         std::string filename1;
         std::string filename2;
         std::string filename3;
-        
+
         static void my_fill_buffer_done1(void* data, COMPONENT_T* comp);
         static void my_fill_buffer_done2(void* data, COMPONENT_T* comp);
         static void my_fill_buffer_done3(void* data, COMPONENT_T* comp);
         void video_decode_test1();
         void video_decode_test2();
         void video_decode_test3();
-        
+
     };
 }
 
